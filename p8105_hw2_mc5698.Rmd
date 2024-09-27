@@ -1,0 +1,61 @@
+---
+title: "p8105_hw2_mc5698.Rmd"
+output:
+  pdf_document: default
+  html_document: default
+date: "2024-09-27"
+---
+#Question 1
+```{r}
+#loading necessary packages
+library(readr)
+library(dplyr)
+library(janitor)
+library(tidyr)
+library(stringr)
+```
+
+```{r}
+nyc_t=
+  read.csv(
+    "/Users/nicolechen/Downloads/p8105_hw2_mc5698/NYC_Transit_Subway_Entrance_And_Exit_Data.csv",
+    na = c("NA",",",".")) |>
+  janitor:: clean_names() |>
+  select(line, station_name, station_latitude, station_longitude, route1, route2,           route3, route4, route5, entry, vending, entrance_type, ada) |> 
+  mutate(
+    entry = 
+      case_match(
+        entry,
+        "Yes" ~ TRUE,
+        "No" ~ FALSE),
+    entry = as.logical(entry)
+      )
+```
+The dataset contains `r names(nyc_t)`. For the data cleaning, I removed unnecessary columns and convert the entry variable from character to a logical variable by using `case_match` function. The dimension of the resulting dataset is `r dim(nyc_t)`. These data are mostly tidy but we could pivot different route columns into one variable. 
+```{r}
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
