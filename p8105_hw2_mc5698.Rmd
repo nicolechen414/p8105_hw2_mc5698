@@ -1,6 +1,6 @@
 ---
 title: "p8105_hw2_mc5698.Rmd"
-output: pdf_document
+output: github_document
   
 date: "2024-09-27"
 ---
