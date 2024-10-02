@@ -1,8 +1,7 @@
 ---
 title: "p8105_hw2_mc5698.Rmd"
-output:
-  pdf_document: default
-  html_document: default
+output: github_document
+  
 date: "2024-09-27"
 ---
 
@@ -51,7 +50,7 @@ proportion_entry= mean(no_vending)
 proportion_entry
 ```
 
-There are 465 distinct stations. 84 stations are ADA compliant.The proportion of station entrances/exits without vending allow entrance is `proportion_entry`. 
+There are 465 distinct stations. 84 stations are ADA compliant.The proportion of station entrances/exits without vending allow entrance is 0.3770492. 
 
 ```{r}
 transfrom_ent=
@@ -62,20 +61,23 @@ transfrom_ent=
     values_to = "route")
 
 A_stations=
-    transfrom_ent |>
-    filter(route == "A") |> 
-  select(station_name, line) |> 
-  distinct()
+  transfrom_ent|>
+  filter(route == "A") |> 
+  distinct(station_name, line) 
   
 
-ada_stations =
-  transfrom_ent |> 
+nyc_t |> 
+  pivot_longer(
+    route1:route11,
+    names_to = "route_num",
+    values_to = "route") |> 
   filter(route == "A", ada == TRUE) |> 
-  select(station_name, line) |> 
-  distinct()
+  distinct(station_name, line)
+
+
 
 ```
-There are `r n_distinct(A_stations$station_name)` distinct stations serve the A train and `r n_distinct(ada_stations$station_name)`stations serve the A train and ADA compliant.
+There are 60 distinct stations serve the A train and 17 stations serve the A train and ADA compliant.
 
 #Question 2
 ```{r}
